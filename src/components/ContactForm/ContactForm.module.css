@@ -1,0 +1,24 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: flex-start;
+  width: 300px;
+  margin: 0 auto;
+  border: 1px solid black;
+  padding: 20px;
+}
+
+.inputTitle {
+  font-size: 18px;
+}
+
+.button {
+  padding: 8px;
+  font-size: 15px;
+}
+
+.input {
+  height: 20px;
+}
