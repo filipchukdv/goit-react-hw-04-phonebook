@@ -13,6 +13,15 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    this.setState({ contacts: JSON.parse(localStorage.getItem('contacts')) });
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   handleChange = e => {
     const input = e.currentTarget;
     this.setState({ [input.name]: input.value });
@@ -62,7 +71,6 @@ export class App extends Component {
         <ContactList
           contacts={this.filterContacts()}
           deleteById={this.deleteById}
-          filter={this.state.filter}
         />
       </div>
     );
