@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
 
-const ContactForm = ({ handleChange, handleSubmit }) => (
+const ContactForm = ({ handleSubmit }) => (
   <>
     <form onSubmit={handleSubmit} className={css.form}>
       <div className={css.inputTitle}>Name</div>

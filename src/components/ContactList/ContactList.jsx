@@ -2,7 +2,7 @@ import ContactElem from './ContactElem/ContatctElem';
 import css from './ContatcList.module.css';
 import PropTypes from 'prop-types';
 
-const ContactList = ({ contacts, handleChange, filter, deleteById }) => (
+const ContactList = ({ contacts, deleteById }) => (
   <div className={css.contactListContainer}>
     <ul>
       {contacts
@@ -23,7 +23,6 @@ const ContactList = ({ contacts, handleChange, filter, deleteById }) => (
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
-  filter: PropTypes.string.isRequired,
   deleteById: PropTypes.func.isRequired,
 };
 

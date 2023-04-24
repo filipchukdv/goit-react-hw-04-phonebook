@@ -17,10 +17,10 @@ const ContactElem = ({ name, number, deleteById, id }) => {
 };
 
 ContactElem.propTypes = {
-  name: PropTypes.string,
-  number: PropTypes.string,
-  deleteById: PropTypes.func,
-  id: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+  deleteById: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default ContactElem;
