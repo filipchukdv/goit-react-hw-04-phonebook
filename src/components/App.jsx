@@ -3,8 +3,7 @@ import ContactList from './ContactList/ContactList';
 import { nanoid } from 'nanoid';
 import css from './App.module.css';
 import Filter from 'components/Filter/Filter';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 export const App = () => {
   const [contacts, setContacts] = useState(() =>
