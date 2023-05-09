@@ -6,8 +6,8 @@ import Filter from 'components/Filter/Filter';
 import { useState, useEffect } from 'react';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(() =>
-    JSON.parse(localStorage.getItem('contacts') ?? [])
+  const [contacts, setContacts] = useState(
+    () => JSON.parse(localStorage.getItem('contacts')) ?? []
   );
   const [filter, setFilter] = useState('');
 
