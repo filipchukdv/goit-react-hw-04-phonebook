@@ -1,81 +1,64 @@
-import { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import { nanoid } from 'nanoid';
 import css from './App.module.css';
 import Filter from 'components/Filter/Filter';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
-export class App extends Component {
-  state = {
-    contacts: [],
-    name: '',
-    number: '',
-    filter: '',
-  };
+export const App = () => {
+  const [contacts, setContacts] = useState(() =>
+    JSON.parse(localStorage.getItem('contacts') ?? [])
+  );
+  const [filter, setFilter] = useState('');
 
-  componentDidMount() {
-    JSON.parse(localStorage.getItem('contacts')) &&
-      this.setState({
-        contacts: JSON.parse(localStorage.getItem('contacts')),
-      });
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.contacts !== this.state.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    }
-  }
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
-  handleChange = e => {
+  const handleChange = e => {
     const input = e.currentTarget;
-    this.setState({ [input.name]: input.value });
+    setFilter(input.value);
   };
 
-  handleSubmit = e => {
+  const handleSubmit = e => {
     const form = e.currentTarget;
-    const name = form.elements.name.value;
-    const number = form.elements.number.value;
-    const { contacts } = this.state;
+    const formName = form.elements.name.value;
+    const formNumber = form.elements.number.value;
+
     e.preventDefault();
     if (
       contacts.find(
-        contact => contact.name.toLowerCase() === name.toLowerCase()
+        contact => contact.name.toLowerCase() === formName.toLowerCase()
       )
     ) {
-      alert(`${name} is already in contacts`);
+      alert(`${formName} is already in contacts`);
       return;
     }
-    this.setState({
-      contacts: [...contacts, { id: nanoid(), name: name, number: number }],
-      name: name,
-      number: number,
-    });
+    setContacts([
+      ...contacts,
+      { id: nanoid(), name: formName, number: formNumber },
+    ]);
+
     form.reset();
   };
 
-  deleteById = id => {
-    this.setState({
-      contacts: this.state.contacts.filter(contact => contact.id !== id),
-    });
+  const deleteById = id => {
+    setContacts(contacts.filter(contact => contact.id !== id));
   };
 
-  filterContacts = () =>
-    this.state.contacts.filter(contact =>
-      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+  const filterContacts = () =>
+    contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
     );
 
-  render() {
-    return (
-      <div>
-        <h1 className={css.title}>Phonebook</h1>
-        <ContactForm handleSubmit={this.handleSubmit} />
-        <h2 className={css.title}>Contacts</h2>
-        <Filter handleChange={this.handleChange} filter={this.state.filter} />
-
-        <ContactList
-          contacts={this.filterContacts()}
-          deleteById={this.deleteById}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <h1 className={css.title}>Phonebook</h1>
+      <ContactForm handleSubmit={handleSubmit} />
+      <h2 className={css.title}>Contacts</h2>
+      <Filter handleChange={handleChange} filter={filter} />
+      <ContactList contacts={filterContacts()} deleteById={deleteById} />
+    </div>
+  );
+};

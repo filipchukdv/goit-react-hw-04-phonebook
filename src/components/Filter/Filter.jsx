@@ -18,5 +18,6 @@ const Filter = ({ handleChange, filter }) => {
 
 Filter.propTypes = {
   handleChange: PropTypes.func.isRequired,
+  filter:PropTypes.string
 };
 export default Filter;
